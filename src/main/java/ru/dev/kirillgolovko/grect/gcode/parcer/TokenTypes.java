@@ -6,18 +6,15 @@ import java.util.function.Function;
 
 
 public enum TokenTypes {
-    IJK_COORDINATE(tokenString -> TokenTypes.IjkPrefixes.stream().anyMatch(tokenString::startsWith)),
+    IJK_COORDINATE(tokenString -> TokenPrefixes.ijkPrefixes.stream().anyMatch(tokenString::startsWith)),
     NOT_COORDINATE(tokenString -> !(
-            TokenTypes.XyzPrefixes.stream().anyMatch(tokenString::startsWith)
-                    || TokenTypes.IjkPrefixes.stream().anyMatch(tokenString::startsWith))),
-    XYZ_COORDINATE(tokenString -> TokenTypes.XyzPrefixes.stream().anyMatch(tokenString::startsWith));
-
-    private final static List<String> XyzPrefixes = Arrays.asList("X", "Y", "Z");
-    private final static List<String> IjkPrefixes = Arrays.asList("I", "J", "K");
+            TokenPrefixes.xyzPrefixes.stream().anyMatch(tokenString::startsWith)
+                    || TokenPrefixes.ijkPrefixes.stream().anyMatch(tokenString::startsWith))),
+    XYZ_COORDINATE(tokenString -> TokenPrefixes.xyzPrefixes.stream().anyMatch(tokenString::startsWith));
 
     private Function<String, Boolean> tokenTypeChecker;
 
-    private TokenTypes(Function<String, Boolean> tokenTypeChecker) {
+    TokenTypes(Function<String, Boolean> tokenTypeChecker) {
         this.tokenTypeChecker = tokenTypeChecker;
     }
 
@@ -26,5 +23,10 @@ public enum TokenTypes {
                 .filter(tokenType -> tokenType.tokenTypeChecker.apply(token))
                 .findFirst()
                 .orElse(NOT_COORDINATE);
+    }
+
+    private static class TokenPrefixes {
+        public final static List<String> xyzPrefixes = Arrays.asList("X", "Y", "Z");
+        public final static List<String> ijkPrefixes = Arrays.asList("I", "J", "K");
     }
 }
