@@ -1,6 +1,8 @@
 package ru.dev.kirillgolovko.grect;
 
+import ru.dev.kirillgolovko.grect.gcode.parcer.GcodeVectorTypes;
 import ru.dev.kirillgolovko.grect.math.Matrix3D;
+import ru.dev.kirillgolovko.grect.math.Vector3D;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,5 +33,20 @@ public class Utils {
         } catch (IOException ex) {
             return Optional.empty();
         }
+    }
+
+    private static String coordinateToString(double a, char c)
+    {
+        return a == 0 ? "" : String.format("%c%.4f ", c, a);
+    }
+
+    public static String Vector3DtoString(Vector3D vector3D, GcodeVectorTypes type)
+    {
+        StringBuilder sb = new StringBuilder()
+                .append(coordinateToString(vector3D.x, type.equals(GcodeVectorTypes.XYZ) ? 'X' : 'I'))
+                .append(coordinateToString(vector3D.y, type.equals(GcodeVectorTypes.XYZ) ? 'Y' : 'J'))
+                .append(coordinateToString(vector3D.z, type.equals(GcodeVectorTypes.XYZ) ? 'Z' : 'K'));
+
+        return sb.toString();
     }
 }
