@@ -38,9 +38,9 @@ public class Matrix3D {
         return zeros;
     }
 
-    public Matrix3D fromString(String matrix) {
+    public static Matrix3D fromString(List<String> matrix) {
         List<List<Double>> mat = new ArrayList<>();
-        for (String row : matrix.split("\n")) {
+        for (String row : matrix) {
             mat.add(Arrays.stream(row.split(" ")).map(Double::parseDouble).collect(Collectors.toList()));
         }
         return new Matrix3D(mat);
@@ -57,10 +57,10 @@ public class Matrix3D {
         return stringBuilder.toString();
     }
 
-    public Vector3D convertBasis(Vector3D vectorInOldBazis) {
+    public Vector3D convertBasis(Vector3D vectorInOldBasis) {
         return new Vector3D(
-                Utils.dot(matrixT.get(0), vectorInOldBazis.x),
-                Utils.dot(matrixT.get(1), vectorInOldBazis.y),
-                Utils.dot(matrixT.get(2), vectorInOldBazis.z));
+                Utils.dot(matrixT.get(0), vectorInOldBasis.x),
+                Utils.dot(matrixT.get(1), vectorInOldBasis.y),
+                Utils.dot(matrixT.get(2), vectorInOldBasis.z));
     }
 }
