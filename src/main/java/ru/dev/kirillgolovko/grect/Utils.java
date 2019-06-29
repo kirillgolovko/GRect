@@ -4,10 +4,9 @@ import ru.dev.kirillgolovko.grect.math.Matrix3D;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
