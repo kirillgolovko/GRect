@@ -24,8 +24,7 @@ public class Utils {
         return vector.stream().collect(Collectors.summarizingDouble(v -> v * a)).getSum();
     }
 
-    public static Optional<Matrix3D> readMatrixFromFile(String pathArg) {
-        Path path = new File(pathArg).toPath();
+    public static Optional<Matrix3D> readMatrixFromFile(Path path) {
         try {
             List<String> rows = Files.readAllLines(path);
             return Optional.of(Matrix3D.fromString(rows));
