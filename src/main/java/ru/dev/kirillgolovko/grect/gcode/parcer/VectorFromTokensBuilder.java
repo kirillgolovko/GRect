@@ -48,13 +48,13 @@ public class VectorFromTokensBuilder {
         IjkPresent = true;
     }
 
-    public Map<GcofeVectorTypes, Vector3D> bake() {
-        Map<GcofeVectorTypes, Vector3D> result = new HashMap<>();
+    public Map<GcodeVectorTypes, Vector3D> bake() {
+        Map<GcodeVectorTypes, Vector3D> result = new HashMap<>();
         if(XyzPresent) {
-            result.put(GcofeVectorTypes.XYZ, new Vector3D(x, y, z));
+            result.put(GcodeVectorTypes.XYZ, new Vector3D(x, y, z));
         }
         if(IjkPresent) {
-            result.put(GcofeVectorTypes.IJK, new Vector3D(i, j, k));
+            result.put(GcodeVectorTypes.IJK, new Vector3D(i, j, k));
         }
         return Collections.unmodifiableMap(result);
     }

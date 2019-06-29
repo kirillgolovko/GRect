@@ -1,6 +1,6 @@
 package ru.dev.kirillgolovko.grect.gcode.parcer;
 
-import java.util.function.BiConsumer;
+        import java.util.function.BiConsumer;
 
 public enum GcodeCoordinates {
     X((val, builder) -> builder.addX(val)),

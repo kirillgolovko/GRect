@@ -3,6 +3,6 @@ package ru.dev.kirillgolovko.grect.gcode.parcer;
 /**
  * @author kirillgolovko
  */
-public enum GcofeVectorTypes {
+public enum GcodeVectorTypes {
     XYZ,IJK
 }
