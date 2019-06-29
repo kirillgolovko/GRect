@@ -1,11 +1,9 @@
 package ru.dev.kirillgolovko.grect.gcode.processor;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import ru.dev.kirillgolovko.grect.Utils;
 import ru.dev.kirillgolovko.grect.gcode.parcer.GcodeCoordinates;
 import ru.dev.kirillgolovko.grect.gcode.parcer.GcodeVectorTypes;
 import ru.dev.kirillgolovko.grect.gcode.parcer.Token;
@@ -35,11 +33,11 @@ public class RectifierProcessor implements StringProcessor {
         }
         Map<GcodeVectorTypes, Vector3D> rectifiedVectors = rectifyVectors(vectors);
 
-        return originalString;
+        return buildUpString(rectifiedVectors, tokens);
     }
 
     private List<Token> splitStringToTokens() {
-       return Arrays
+        return Arrays
                 .stream(originalString.split(" "))
                 .map(Token::getTokenForSubstr)
                 .collect(Collectors.toList());
@@ -51,5 +49,30 @@ public class RectifierProcessor implements StringProcessor {
         return vectors;
     }
 
-    
+    private String buildUpString(Map<GcodeVectorTypes, Vector3D> rectifiedVectors, List<Token> tokens) {
+        List<String> result = new LinkedList<>();
+        Set<GcodeVectorTypes> printedVectors = new HashSet<>();
+        tokens.forEach(token -> {
+            switch (token.tokenType) {
+                case XYZ_COORDINATE:
+                    if (!printedVectors.contains(GcodeVectorTypes.XYZ)) {
+                        result.add(Utils.Vector3DtoString(rectifiedVectors.get(
+                                GcodeVectorTypes.XYZ), GcodeVectorTypes.XYZ));
+                        printedVectors.add(GcodeVectorTypes.XYZ);
+                    }
+                    break;
+                case IJK_COORDINATE:
+                    if (!printedVectors.contains(GcodeVectorTypes.IJK)) {
+                        result.add(Utils.Vector3DtoString(rectifiedVectors.get(
+                                GcodeVectorTypes.IJK), GcodeVectorTypes.IJK));
+                        printedVectors.add(GcodeVectorTypes.IJK);
+                    }
+                    break;
+                default:
+                    result.add(token.originalString);
+                    break;
+            }
+        });
+        return String.join(" ", result);
+    }
 }
