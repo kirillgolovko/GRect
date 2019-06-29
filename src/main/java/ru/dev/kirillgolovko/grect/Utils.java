@@ -1,6 +1,13 @@
 package ru.dev.kirillgolovko.grect;
 
+import ru.dev.kirillgolovko.grect.math.Matrix3D;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,4 +23,13 @@ public class Utils {
    public static double dot(List<Double> vector, double a) {
        return vector.stream().collect(Collectors.summarizingDouble(v -> v * a)).getSum();
    }
+
+    public static Matrix3D readMatrixFromFile(String pathArg) throws IOException {
+        File file = new File(pathArg);
+        Path path = file.toPath();
+
+        List<String> rows = Files.readAllLines(path);
+
+        return Matrix3D.fromString(rows);
+    }
 }
